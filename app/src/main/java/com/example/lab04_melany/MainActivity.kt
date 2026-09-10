@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -13,6 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 
+// Paleta de colores Café y Beige elegante
+val BeigeFondo = Color(0xFFFDFBF7)
+val BeigeClaroCard = Color(0xFFF5EBE6)
+val CafePrincipal = Color(0xFF5C4033)
+val CafeClaroBoton = Color(0xFF8B5A2B)
+val MarronTexto = Color(0xFF3E2723)
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +30,9 @@ class MainActivity : ComponentActivity() {
             MaterialTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color(0xFFE1F5FE)
+                    color = BeigeFondo
                 ) {
-                    MovieCounter()
+                    BebidasSecretasApp()
                 }
             }
         }
@@ -30,72 +40,117 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MovieCounter(modifier: Modifier = Modifier) {
-    var count by rememberSaveable { mutableStateOf(0) }
-    var movieName by rememberSaveable { mutableStateOf("") }
+fun BebidasSecretasApp(modifier: Modifier = Modifier) {
+    // Uso correcto de rememberSaveable para persistir el texto al rotar la pantalla
+    var bebidaTexto by rememberSaveable { mutableStateOf("") }
+
+    // Lista dinámica reactiva para guardar las bebidas
+    val drinkList = remember { mutableStateListOf<String>() }
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        Spacer(modifier = Modifier.height(8.dp))
+
         Text(
-            text = "Creado por: Melany",
-            style = MaterialTheme.typography.titleMedium,
-            color = Color(0xFF01579B)
+            text = "Recetas de Bebidas Secretas",
+            style = MaterialTheme.typography.titleLarge,
+            color = CafePrincipal
+        )
+
+        Text(
+            text = "Barista: Melany",
+            style = MaterialTheme.typography.bodyMedium,
+            color = CafeClaroBoton
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Text(
-            text = "You have added $count movies.",
-            style = MaterialTheme.typography.headlineSmall,
-            color = Color(0xFF0277BD)
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         OutlinedTextField(
-            value = movieName,
-            onValueChange = { movieName = it },
-            label = { Text("Movie Name") },
+            value = bebidaTexto,
+            onValueChange = { bebidaTexto = it },
+            label = { Text("Nombre de la bebida secreta", color = CafePrincipal) },
+            shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFF0277BD),
-                unfocusedBorderColor = Color(0xFF4FC3F7),
-                focusedLabelColor = Color(0xFF0277BD)
+                focusedBorderColor = CafePrincipal,
+                unfocusedBorderColor = CafeClaroBoton,
+                focusedLabelColor = CafePrincipal,
+                cursorColor = CafePrincipal
             ),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
         Button(
             onClick = {
-                if (movieName.isNotBlank()) {
-                    count++
-                    movieName = ""
+                if (bebidaTexto.isNotBlank()) {
+                    drinkList.add(bebidaTexto)
+                    bebidaTexto = ""
                 }
             },
+            shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF4FC3F7)
-            )
+                containerColor = CafeClaroBoton
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
         ) {
             Text(
-                text = "Add Movie",
-                color = Color.White
+                text = "Guardar Receta Secreta",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge
             )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Total registradas: ${drinkList.size}",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MarronTexto
+        )
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(drinkList) { drink ->
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(containerColor = BeigeClaroCard),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            text = "• $drink",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MarronTexto
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewMovieCounter() {
+fun PreviewBebidasSecretas() {
     MaterialTheme {
-        Surface(color = Color(0xFFE1F5FE)) {
-            MovieCounter()
+        Surface(color = BeigeFondo) {
+            BebidasSecretasApp()
         }
     }
 }
+
