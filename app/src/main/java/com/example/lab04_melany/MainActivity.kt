@@ -37,7 +37,6 @@ fun ContenidoLaboratorio() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // COMPONENTE 1 (Actualizado de la rama upgrading-component-1)
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,7 +56,6 @@ fun ContenidoLaboratorio() {
             }
         }
 
-        // COMPONENTE 2 (Actualizado de la rama main)
         OutlinedTextField(
             value = textoEstado,
             onValueChange = { textoEstado = it },
@@ -70,3 +68,6 @@ fun ContenidoLaboratorio() {
         )
     }
 }
+
+// Comentario hecho en main diferente para simular conflicto
+
