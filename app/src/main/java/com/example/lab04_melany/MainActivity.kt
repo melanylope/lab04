@@ -69,5 +69,3 @@ fun ContenidoLaboratorio() {
     }
 }
 
-// Comentario hecho en main diferente para simular conflicto
-
