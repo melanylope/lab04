@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ViewHolaCurso()
+                    ContenidoLaboratorio()
                 }
             }
         }
@@ -28,24 +28,43 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ViewHolaCurso() {
+fun ContenidoLaboratorio() {
+    var textoEstado by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "Welcome to the Course!",
-            fontSize = 28.sp
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        // Aqui esta el cambio:
-        Text(
-            text = "Hello, Student!",
-            fontSize = 20.sp
+        // COMPONENTE 1 MODIFICADO
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Text(
+                    text = "Laboratorio 04 - Rama Upgrading",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = "Estilo modificado en nueva rama.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
 
+        OutlinedTextField(
+            value = textoEstado,
+            onValueChange = { textoEstado = it },
+            label = { Text("Ingresa tu nombre") },
+            modifier = Modifier.fillMaxWidth()
         )
     }
+}
 
 
