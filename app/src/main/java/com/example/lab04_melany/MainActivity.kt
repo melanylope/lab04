@@ -37,26 +37,27 @@ fun ContenidoLaboratorio() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // COMPONENTE 1: Card
+        // COMPONENTE 1 (Actualizado de la rama upgrading-component-1)
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                .padding(12.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(20.dp)) {
                 Text(
-                    text = "Laboratorio 04 - Melany",
-                    style = MaterialTheme.typography.titleMedium
+                    text = "Laboratorio 04 - Rama Upgrading",
+                    style = MaterialTheme.typography.titleLarge
                 )
                 Text(
-                    text = "Componente Card agregado correctamente.",
+                    text = "Estilo modificado en nueva rama.",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
 
-        // COMPONENTE 2 MODIFICADO: OutlinedTextField con estilo actualizado
+        // COMPONENTE 2 (Actualizado de la rama main)
         OutlinedTextField(
             value = textoEstado,
             onValueChange = { textoEstado = it },
@@ -69,5 +70,3 @@ fun ContenidoLaboratorio() {
         )
     }
 }
-
-
