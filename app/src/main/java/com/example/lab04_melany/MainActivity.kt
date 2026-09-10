@@ -9,7 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +19,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ViewHolaCurso()
+                    ContenidoLaboratorio()
                 }
             }
         }
@@ -28,24 +27,47 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ViewHolaCurso() {
+fun ContenidoLaboratorio() {
+    var textoEstado by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "Welcome to the Course!",
-            fontSize = 28.sp
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        // Aqui esta el cambio:
-        Text(
-            text = "Hello, Student!",
-            fontSize = 20.sp
+        // COMPONENTE 1: Card
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Laboratorio 04 - Melany",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Componente Card agregado correctamente.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
 
+        // COMPONENTE 2 MODIFICADO: OutlinedTextField con estilo actualizado
+        OutlinedTextField(
+            value = textoEstado,
+            onValueChange = { textoEstado = it },
+            label = { Text("Escribe tu apellido aquí") },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.secondary
+            ),
+            modifier = Modifier.fillMaxWidth()
         )
     }
+}
 
 
